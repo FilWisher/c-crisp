@@ -1,4 +1,4 @@
-all: lisp
+all: main lisp
 
 env.o: env.c env.h
 
