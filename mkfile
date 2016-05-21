@@ -13,4 +13,4 @@ runtest:
 	test/test
 
 clean: main lisp.o test/test
-	-rm -rf main lisp.o test/test
+	rm -rf main lisp.o test/test
