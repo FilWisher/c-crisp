@@ -1,0 +1,4 @@
+src/*.o
+test/*.o
+repl
+test/test

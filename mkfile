@@ -1,16 +1,23 @@
-all: test runtest
+MKSHELL=$PLAN9/bin/rc
 
-lisp.o: lisp.c lisp.h
-	gcc -c lisp.c -o lisp.o
+cc = gcc
+src = src/lex.c src/parse.c
+obj = ${src:%.c=%.o}
+test = test/test.c test/lex_test.c test/parse_test.c
 
-test: test/test.c lisp.o
-	gcc test/test.c lisp.o -o test/test
+all: repl runtest 
 
-main: main.c lisp.o
-	gcc main.c lisp.o -o main
+src/%.o: src/%.c
+	$cc -c $CFLAGS src/$stem.c -o src/$stem.o
 
-runtest:
+repl: $obj
+	$cc $obj src/repl.c -o repl
+	
+test: $obj $test
+	$cc $obj $test -o test/test
+	
+runtest: test
 	test/test
-
-clean: main lisp.o test/test
-	rm -rf main lisp.o test/test
+	
+clean:
+	rm -rf src/*.o test/test 
