@@ -20,4 +20,4 @@ runtest: test
 	test/test
 	
 clean:
-	rm -rf src/*.o test/test 
+	rm -rf src/*.o test/test repl
