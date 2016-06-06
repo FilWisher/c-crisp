@@ -4,12 +4,6 @@
 
 #include "lisp.h"
 
-/* TODO: env must support: 
-  - deriving new env 
-  - binding names to atoms
-  - looking up names in env
-*/
-
 env_entry *env_entry_make(char *k, atom *v, env_entry *next) {
   env_entry *ent = (env_entry *)malloc(sizeof(env_entry));
   ent->k = strdup(k);
@@ -18,6 +12,7 @@ env_entry *env_entry_make(char *k, atom *v, env_entry *next) {
   return ent;
 }
 
+// TODO: increase size of env
 env *env_make(env *parent, int cap) {
   env *e = (env *)malloc(sizeof(env));
   e->parent = parent;
@@ -77,16 +72,6 @@ atom *eval(env *e, atom *exp) {
   default:
     return atom_make(A_ERROR, "what the hello");
   }
-
-  /*  TODO:
-    if number or string
-      return it
-    if symbol
-      look it up in env
-    if list
-      apply first arg to rest
-  */
-
 }
 
 int atom_len(atom *a) {

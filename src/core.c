@@ -75,7 +75,8 @@ static struct core_fn fns[] = {
   { "+", fn_add },
   { "-", fn_sub },
   { "define", fn_define },
-  { "lambda", fn_lambda }
+  { "lambda", fn_lambda },
+  { "\\", fn_lambda }
 };
 
 void load_core(env *e) {
@@ -87,11 +88,6 @@ void load_core(env *e) {
     a->fn = fp->fn; 
     env_bind(e, fp->name, a);
   }
-
-  //// TODO: add other built in fns
-  //atom *a = atom_make(A_FN, "");
-  //a->fn = fn_add;
-  //env_bind(e, "+", a);
 }
 
 void atom_print(atom *a) {
