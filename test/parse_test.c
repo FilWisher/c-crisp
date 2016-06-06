@@ -11,28 +11,6 @@ void simple_atom_test() {
   atom_free(a);
 }
 
-void atom_print(atom *a) {
-
-  switch(a->typ) {
-  case A_SYMBOL:
-    printf("%s ", a->val);
-    break;
-  case A_NUMBER:
-    printf("<%d> ", a->number);
-    break;
-  case A_PAIR:
-    printf("(");
-    atom_print(a->pair.car);
-    printf(" . ");
-    atom_print(a->pair.cdr);
-    printf(")");
-    break;
-  case A_NIL:
-    printf("nil");
-    break;
-  }
-}
-
 void parse_test() {
   atom *a = parse("");
   check(a->typ == A_ERROR, "returns error");
