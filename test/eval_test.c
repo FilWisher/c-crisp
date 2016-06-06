@@ -3,7 +3,6 @@
 #include "../src/lisp.h"
 #include "test.h"
 
-
 void simple_env_test() {
   
   printf("\n");
@@ -53,6 +52,23 @@ void eval_test() {
   a = apply(fn, parse("(101 777)"));  
   check(a->typ == A_NUMBER, "atom has correct typ");
   check(equal(a->val, "777"), "atom has correct val");
+ 
+  // load core fns
+  load_core(e);
+  a = eval(e, parse("(+ 2 3)"));
+  check(a->typ == A_NUMBER, "evaluates to number");
+  check(a->number == 5, "evaluates to correct value");
   
-  printf("val: %s\n", a->val);
+  a = eval(e, parse("(+ 2 3 1)"));
+  check(a->typ == A_NUMBER, "evaluates to number");
+  check(a->number == 6, "evaluates to correct value");
+  
+  a = eval(e, parse("(- 3 3)"));
+  check(a->typ == A_NUMBER, "evaluates to number");
+  check(a->number == 0, "evaluates to correct value");
+  
+  a = eval(e, parse("(- 7 6 5 3)"));
+  check(a->typ == A_NUMBER, "evaluates to number");
+  check(a->number == -7, "evaluates to correct value");
+   
 }

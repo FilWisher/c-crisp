@@ -55,14 +55,25 @@ atom *env_lookup(env *e, char *k) {
   return atom_make(A_ERROR, "Couldn't find it");
 }
 
+int equal (char *a, char *b) { return strcmp(a, b) == 0; }
+
 atom *eval(env *e, atom *exp) {
 
+  atom *op;
   switch (exp->typ) {
   case A_NUMBER:
   case A_STRING:
     return exp;
   case A_SYMBOL:
     return env_lookup(e, exp->val);
+  case A_PAIR:
+    op = eval(e, car(exp));
+    if (op->typ == A_FN) {
+      // call builtin
+      return op->fn(e, cdr(exp)); 
+    } else {
+      return apply(op, car(cdr(exp)));
+    }
   default:
     return atom_make(A_ERROR, "what the hello");
   }
@@ -78,9 +89,6 @@ atom *eval(env *e, atom *exp) {
   */
 
 }
-
-#define car(a) (a->pair.car)
-#define cdr(a) (a->pair.cdr)
 
 int atom_len(atom *a) {
   int len = 0;
@@ -123,6 +131,9 @@ atom *make_fn(env *e, atom *params, atom *body) {
 atom *apply(atom *op, atom *args) {
 
   int res;
+  if (op->typ != A_PAIR) {
+    return atom_make(A_ERROR, "This isn't an operation\n"); 
+  }
   env *e = env_make(car(op)->env, 8);
   atom *param_names = car(cdr(op));
   atom *body = car(cdr(cdr(op)));
@@ -132,9 +143,4 @@ atom *apply(atom *op, atom *args) {
   }
   
   return eval(e, body); 
-  
-  /* TODO:
-    create new env with names bound to args
-    eval body in new env
-  */
 }

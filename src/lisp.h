@@ -11,7 +11,7 @@ token *token_make(enum tk_typ typ, char *val, int len);
 void token_free(token *t);
 token *tokenize(char *text);
 
-enum a_typ { A_PAIR, A_STRING, A_SYMBOL, A_NUMBER, A_ERROR, A_NIL, A_ENV };
+enum a_typ { A_PAIR, A_STRING, A_SYMBOL, A_NUMBER, A_ERROR, A_NIL, A_ENV, A_FN };
 
 // forward declaration
 struct atom;
@@ -21,6 +21,9 @@ struct pair {
   struct atom *car, *cdr;
 };
 
+#define car(a) (a->pair.car)
+#define cdr(a) (a->pair.cdr)
+
 typedef struct atom {
   enum a_typ typ;
   char *val;
@@ -28,6 +31,7 @@ typedef struct atom {
     int number;
     struct pair pair;
     struct env *env;
+    struct atom *(*fn)(struct env *e, struct atom *args);
   };
 } atom;
 
@@ -53,6 +57,8 @@ typedef struct env {
   env_entry **table;
 } env;
 
+int equal(char *a, char *b);
+
 env *env_make(env *parent, int cap);
 atom *make_fn(env *e, atom *params, atom *body);
 void *env_bind(env *e, char *k, atom *v);
@@ -62,3 +68,6 @@ unsigned int hash(char *k);
 atom *eval(env *e, atom *exp);
 atom *apply(atom *op, atom *args);
 int atom_len(atom *a);
+void atom_print(atom *a);
+
+void load_core(env *e);

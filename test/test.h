@@ -1,5 +1,4 @@
 int check(int p, char *msg);
-int equal(char *a, char *b);
 int equal_list(atom *a, atom *b);
 void atom_print(atom *a);
 
