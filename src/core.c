@@ -47,9 +47,23 @@ atom *fn_sub(env *e, atom *args) {
   return a;
 }
 
+atom *fn_define(env *e, atom *args) {
+
+  //if (args->typ != PAIR) 
+  if (atom_len(args) != 2)
+    return atom_make(A_ERROR, "wrong number of args passed to define");
+  
+  if (car(args)->typ != A_SYMBOL)
+    return atom_make(A_ERROR, "first arg must be symbol");
+  
+  env_bind(e, car(args)->val, eval(e, car(cdr(args))));
+  return atom_make(A_NIL, ""); 
+}
+
 static struct core_fn fns[] = {
   { "+", fn_add },
-  { "-", fn_sub }
+  { "-", fn_sub },
+  { "define", fn_define }
 };
 
 void load_core(env *e) {
@@ -92,6 +106,9 @@ void atom_print(atom *a) {
     break;
   case A_ERROR:
     printf("err: %s", a->val);
+    break;
+  case A_FN:
+    printf("<fn :%s>", a->val);
     break;
   default:
     printf("wat");
