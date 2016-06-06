@@ -23,10 +23,7 @@ int main() {
     ast = eval(global, parse(input));
    
     atom_print(ast);
-  
   }
-
-
 
   printf("repl\n");
 }

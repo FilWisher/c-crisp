@@ -60,10 +60,22 @@ atom *fn_define(env *e, atom *args) {
   return atom_make(A_NIL, ""); 
 }
 
+atom *fn_lambda(env *e, atom *args) {
+ 
+  if (atom_len(args) != 2) 
+    return atom_make(A_ERROR, "wrong number of args passed to lambda");
+  
+  if (car(args)->typ != A_PAIR && car(args)->typ != A_NIL)
+    return atom_make(A_ERROR, "first arg must be arg list");
+
+  return make_fn(e, car(args), car(cdr(args)));
+}
+
 static struct core_fn fns[] = {
   { "+", fn_add },
   { "-", fn_sub },
-  { "define", fn_define }
+  { "define", fn_define },
+  { "lambda", fn_lambda }
 };
 
 void load_core(env *e) {

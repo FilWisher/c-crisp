@@ -72,12 +72,11 @@ atom *eval(env *e, atom *exp) {
       // call builtin
       return op->fn(e, cdr(exp)); 
     } else {
-      return apply(op, car(cdr(exp)));
+      return apply(op, cdr(exp));
     }
   default:
     return atom_make(A_ERROR, "what the hello");
   }
-
 
   /*  TODO:
     if number or string
@@ -125,6 +124,7 @@ atom *make_fn(env *e, atom *params, atom *body) {
   car(cdr(a)) = params;
   cdr(cdr(a)) = atom_make(A_PAIR, "");
   car(cdr(cdr(a))) = body;
+  cdr(cdr(cdr(a))) = atom_make(A_NIL, "");
   return a;
 }
 
