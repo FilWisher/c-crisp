@@ -104,6 +104,7 @@ int env_bind_args(env *e, atom *names, atom *args) {
   while (np->typ != A_NIL && ap->typ != A_NIL) {
     env_bind(e, car(np)->val, car(ap));
     np = cdr(np);
+    ap = cdr(ap);
   }
   return 0;
 }

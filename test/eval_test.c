@@ -54,8 +54,5 @@ void eval_test() {
   check(a->typ == A_NUMBER, "atom has correct typ");
   check(equal(a->val, "777"), "atom has correct val");
   
-  
   printf("val: %s\n", a->val);
-
-  check(1==1, "true");
 }
