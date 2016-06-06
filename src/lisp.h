@@ -29,6 +29,11 @@ typedef struct atom {
   };
 } atom;
 
+typedef struct {
+  token *tks, *tp;
+} parser;
+
 atom *atom_make(enum a_typ typ, char *val);
 void atom_free(atom *a);
 atom *parse(char *input);
+atom *parse_switch(parser *p);
