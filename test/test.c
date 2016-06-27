@@ -25,4 +25,6 @@ int main() {
   simple_env_test();
   simple_eval_test();
   eval_test();
+  
+  core_test();
 }

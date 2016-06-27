@@ -12,6 +12,15 @@ atom *atom_make(enum a_typ typ, char *val) {
   return a;
 }
 
+atom *pair_make(atom *car, atom *cdr) {
+  atom *a = atom_make(A_PAIR, "");
+  car(a) = car;
+  cdr(a) = atom_make(A_PAIR, "");
+  car(cdr(a)) = cdr;
+  cdr(cdr(a)) = atom_make(A_NIL, "");
+  return a;
+}
+
 void atom_free(atom *a) {
   free(a->val);
   free(a);
@@ -83,5 +92,5 @@ atom *parse(char *input) {
   p->tks = p->tp = tokenize(input);
   if (!p->tp) return atom_err("Parse error");
  
-  parse_switch(p);
+  return parse_switch(p);
 }

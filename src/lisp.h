@@ -71,3 +71,7 @@ int atom_len(atom *a);
 void atom_print(atom *a);
 
 void load_core(env *e);
+
+
+atom *pair_make(atom *car, atom *cdr);
+atom *fn_lambda(env *e, atom *args);

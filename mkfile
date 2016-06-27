@@ -1,7 +1,7 @@
 cc = gcc
 src = src/lex.c src/parse.c src/eval.c src/core.c
 obj = ${src:%.c=%.o}
-test = test/test.c test/lex_test.c test/parse_test.c test/eval_test.c
+test = test/test.c test/lex_test.c test/parse_test.c test/eval_test.c test/core_test.c
 
 all: repl runtest 
 

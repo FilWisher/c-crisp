@@ -11,3 +11,5 @@ void parse_test();
 void simple_env_test();
 void simple_eval_test();
 void eval_test();
+
+void core_test();

@@ -42,8 +42,10 @@ atom *env_lookup(env *e, char *k) {
   while (e) {
     ent = *(e->table + (i%e->cap));
     while (ent != NULL) {
-      if (strcmp(ent->k, k) == 0) return ent->v;
-      else ent = ent->next;
+      if (strcmp(ent->k, k) == 0)
+        return ent->v;
+      else
+        ent = ent->next;
     }
     e = e->parent; 
   }
@@ -53,7 +55,7 @@ atom *env_lookup(env *e, char *k) {
 int equal (char *a, char *b) { return strcmp(a, b) == 0; }
 
 atom *eval(env *e, atom *exp) {
-
+  
   atom *op;
   switch (exp->typ) {
   case A_NUMBER:
@@ -114,7 +116,7 @@ atom *make_fn(env *e, atom *params, atom *body) {
 }
 
 atom *apply(atom *op, atom *args) {
-
+  
   int res;
   if (op->typ != A_PAIR) {
     return atom_make(A_ERROR, "This isn't an operation\n"); 
