@@ -21,6 +21,10 @@ int issymbol(char c) {
   return (isalnum(c) || (ispunct(c) && c != '(' && c !=')'));
 }
 
+int isstring(char c) {
+  return (c != '"' && c != ' ');
+}
+
 token *tokenize(char *text) {
   
   char *tp = text;
@@ -36,6 +40,11 @@ token *tokenize(char *text) {
     case ')':
       tok = token_make(TK_CLOSE, ")", 1);
       tp += 1;
+      break;
+    case '"':
+      tp++;
+      while (isstring(*(tp+len))) len++;
+      tok = token_make(TK_STRING, tp, len);
       break;
     default:
       while (issymbol(*(tp+len))) len++;

@@ -4,8 +4,7 @@
 
 struct core_fn {
   char *name;
-  atom *(*fn)(env *e, atom *);
-};
+  atom *(*fn)(env *e, atom *); };
 
 atom *fn_add(env *e, atom *args) {
   int sum = 0;
@@ -129,6 +128,20 @@ atom *fn_lambda(env *e, atom *args) {
   return fn;
 }
 
+atom *fn_car(env *e, atom *args) {
+  if (car(args)->typ != A_PAIR)
+    return atom_make(A_ERROR, "first arg must be arg list");
+
+  return car(car(args));
+}
+
+atom *fn_cdr(env *e, atom *args) {
+  if (car(args)->typ != A_PAIR)
+    return atom_make(A_ERROR, "first arg must be arg list");
+
+  return cdr(car(args));
+}
+
 static struct core_fn fns[] = {
   { "+", fn_add },
   { "-", fn_sub },
@@ -136,7 +149,9 @@ static struct core_fn fns[] = {
   { "/", fn_div },
   { "define", fn_define },
   { "lambda", fn_lambda },
-  { "defun", fn_defun }
+  { "defun", fn_defun },
+  { "car", fn_car },
+  { "cdr", fn_cdr }
 };
 
 void load_core(env *e) {
@@ -176,6 +191,9 @@ void atom_print(atom *a) {
     break;
   case A_FN:
     printf("<fn :%s>", a->val);
+    break;
+  case A_STRING:
+    printf("\"%s\"", a->val);
     break;
   default:
     printf("wat");

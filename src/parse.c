@@ -82,6 +82,8 @@ atom *parse_switch(parser *p) {
     return parse_symbol(p); 
   case TK_CLOSE:
     return atom_make(A_NIL, "");
+  case TK_STRING:
+    return atom_make(A_STRING, p->tp->val);
   default:
     return atom_err("unexpected token");
   }

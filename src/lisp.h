@@ -1,4 +1,4 @@
-enum tk_typ { TK_OPEN, TK_CLOSE, TK_SYMBOL };
+enum tk_typ { TK_OPEN, TK_CLOSE, TK_SYMBOL, TK_STRING };
 
 typedef struct token {
   enum tk_typ typ;
