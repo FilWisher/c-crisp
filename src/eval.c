@@ -31,11 +31,12 @@ unsigned int hash(char *k) {
   return i;
 }
 
-void *env_bind(env *e, char *k, atom *v) {
+void env_bind(env *e, char *k, atom *v) {
   // TODO: if load balance >= 1, copy table over
   unsigned int i = hash(k) % e->cap;
   *(e->table + i) = env_entry_make(k, v, *(e->table + i));
 }
+
 atom *env_lookup(env *e, char *k) {
   unsigned int i = hash(k);
   env_entry *ent = NULL;

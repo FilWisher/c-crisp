@@ -98,7 +98,7 @@ atom *fn_define(env *e, atom *args) {
   
   if (car(args)->typ != A_SYMBOL)
     return atom_make(A_ERROR, "first arg must be symbol");
-  
+ 
   env_bind(e, car(args)->val, eval(e, car(cdr(args))));
   return car(args); 
 }
@@ -106,9 +106,6 @@ atom *fn_define(env *e, atom *args) {
 atom *fn_defun(env *e, atom *args) {
   atom *name = car(args);
   atom *fn = fn_lambda(e, cdr(args));
-  printf("\nfn1: ");
-  atom_print(fn);
-  atom *lambda;
 
   if (atom_len(args) != 3)
     return atom_make(A_ERROR, "wrong number of args passed to defun");
@@ -116,10 +113,8 @@ atom *fn_defun(env *e, atom *args) {
   if (car(args)->typ != A_SYMBOL)
     return atom_make(A_ERROR, "first arg must be symbol");
 
-  lambda = pair_make(name, fn);
-  printf("\nla: ");
-  atom_print(lambda);
-  return fn_define(e, lambda);
+  env_bind(e, name->val, fn);
+  return name; 
 }
 
 atom *fn_lambda(env *e, atom *args) {
@@ -131,8 +126,6 @@ atom *fn_lambda(env *e, atom *args) {
     return atom_make(A_ERROR, "first arg must be arg list");
 
   atom *fn = make_fn(e, car(args), car(cdr(args)));
-  printf("fn: ");
-  atom_print(fn);
   return fn;
 }
 

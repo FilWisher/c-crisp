@@ -60,7 +60,11 @@ void core_div() {
 void core_defun() {
   env *e = prepare_env();
   atom *exp = eval(e, parse("(defun hello (x) (+ 2 2))"));
-  test_int(e, "(hello 8)", 8);
+  test_int(e, "(hello 8)", 4);
+  exp = eval(e, parse("(defun cool () 10)"));
+  test_int(e, "(cool)", 10);
+  exp = eval(e, parse("(defun cool (x y z) (+ x y z))"));
+  test_int(e, "(cool 1 2 3)", 6);
 }
 
 void core_test() {

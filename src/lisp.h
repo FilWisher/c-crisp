@@ -61,7 +61,7 @@ int equal(char *a, char *b);
 
 env *env_make(env *parent, int cap);
 atom *make_fn(env *e, atom *params, atom *body);
-void *env_bind(env *e, char *k, atom *v);
+void env_bind(env *e, char *k, atom *v);
 atom *env_lookup(env *e, char *k);
 unsigned int hash(char *k); 
 
